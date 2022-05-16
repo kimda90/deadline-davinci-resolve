@@ -134,7 +134,8 @@ class FuScriptProcess(ManagedProcess):
 
     def RenderExecutable(self):
         # return "python.exe"
-        return self.deadline_plugin.GetConfigEntry("FuScriptExecutable")
+        executables = self.deadline_plugin.GetConfigEntry("FuScriptExecutable")
+        return FileUtils.SearchFileListFor32Bit( executables )
 
     def RenderArgument(self):
         project_name = self.deadline_plugin.GetPluginInfoEntry("ProjectName")
