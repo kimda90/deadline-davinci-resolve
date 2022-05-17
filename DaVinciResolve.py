@@ -136,6 +136,11 @@ class FuScriptProcess(ManagedProcess):
         # return "python.exe"
         executables = self.deadline_plugin.GetConfigEntry("FuScriptExecutable")
         exe = FileUtils.SearchFileListFor32Bit( executables )
+
+
+        self.LogInfo( "Looking for DaVinci Resolve: '%s'" % exe )
+
+
         return exe
 
     def RenderArgument(self):
