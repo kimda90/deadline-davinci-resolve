@@ -74,3 +74,36 @@ Index=3
 Required=false
 DisableIfBlank=false
 DefaultValue=
+
+[DatabaseType]
+Type=string
+Label=Database Type
+Category=Database
+CategoryOrder=1
+Description=Type of database (Disk or PostgreSQL)
+Index=5
+Required=true
+DisableIfBlank=false
+DefaultValue=
+
+[DatabaseName]
+Type=string
+Label=Render Preset
+Category=Database
+CategoryOrder=1
+Description=The Name of the database
+Index=4
+Required=true
+DisableIfBlank=false
+DefaultValue=
+
+[DatabaseIp]
+Type=string
+Label=Database Ip
+Category=Database
+CategoryOrder=1
+Description=The IP of the database (for PostgreSQL)
+Index=3
+Required=false
+DisableIfBlank=false
+DefaultValue=
