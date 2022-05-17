@@ -149,9 +149,13 @@ class FuScriptProcess(ManagedProcess):
         codec = self.deadline_plugin.GetPluginInfoEntryWithDefault("Codec", "")
         render_preset = self.deadline_plugin.GetPluginInfoEntryWithDefault("RenderPreset", "")
 
+        database_type = self.deadline_plugin.GetPluginInfoEntryWithDefault("DatabaseType", "")
+        database_name = self.deadline_plugin.GetPluginInfoEntryWithDefault("DatabaseName", "")
+        database_ip = self.deadline_plugin.GetPluginInfoEntryWithDefault("DatabaseIp", "")
+
         dl_script = Path.Combine(self.deadline_plugin.GetPluginDirectory(), "dl_script.py")
 
-        args = ['"{}" "{}" "{}"'.format(dl_script, project_name, output_path)]
+        args = ['"{}" "{}" "{}"'.format(dl_script, database_type, database_name, project_name, output_path)]
 
         if folders:
             args.append('--folders "{}"'.format(folders))
@@ -167,6 +171,9 @@ class FuScriptProcess(ManagedProcess):
 
         if render_preset:
             args.append('--render_preset "{}"'.format(render_preset))
+
+        if database_ip:
+            args.append('--database_ip "{}"'.format(database_ip))
 
         return " ".join(args)
 

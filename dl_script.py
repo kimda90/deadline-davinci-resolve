@@ -15,6 +15,8 @@ except ImportError:
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("database_type")
+    parser.add_argument("database_name")
     parser.add_argument("project_name")
     parser.add_argument("output_path")
     parser.add_argument("--folders", default="")
@@ -22,7 +24,12 @@ def main():
     parser.add_argument("--format", default="")
     parser.add_argument("--codec", default="")
     parser.add_argument("--render_preset", default="")
+    parser.add_argument("--database_ip", default="")
     args = parser.parse_args()
+
+    database_type = args.database_type
+    database_name = args.database_name
+    database_ip = args.database_ip
 
     project_name = args.project_name
     output_path = args.output_path
@@ -35,6 +42,10 @@ def main():
     formatted_output_path = datetime.now().strftime(output_path)
 
     resolve = _connect_to_resolve()
+
+    if database_type and database_name:
+        _load_database(resolve, database_type, database_name, database_ip)
+
     project = _load_project(resolve, project_name, folders)
 
     if timeline_name:
@@ -43,6 +54,13 @@ def main():
     jobId = _setup_render_job(project, formatted_output_path, format_, codec, render_preset)
     _start_render(project, jobId)
 
+def _load_database(resolve, database_type, database_name, database_ip="127.0.0.1"):
+    print("Loading database:", database_name)
+    project_manager = resolve.GetProjectManager()
+    assert project_manager.SetCurrentDatabase({
+        "DbType": database_type, 
+        "DbName": database_name, 
+        "IpAddress": database_ip}), "Cannot load database."
 
 def _connect_to_resolve():
     resolve = None
