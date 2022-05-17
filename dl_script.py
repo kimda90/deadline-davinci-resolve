@@ -4,6 +4,7 @@ import time
 import argparse
 from datetime import datetime
 
+
 try:
     import DaVinciResolveScript as dvr_script
 except ImportError:
@@ -39,8 +40,8 @@ def main():
     if timeline_name:
         _set_timeline(project, timeline_name)
 
-    _setup_render_job(project, formatted_output_path, format_, codec, render_preset)
-    _start_render(project)
+    jobId = _setup_render_job(project, formatted_output_path, format_, codec, render_preset)
+    _start_render(project, jobId)
 
 
 def _connect_to_resolve():
@@ -101,16 +102,20 @@ def _setup_render_job(project, formatted_output_path, format_="", codec="", rend
     if format_ and codec and not render_preset:
         assert project.SetCurrentRenderFormatAndCodec(format_, codec), "Cannot set render format/codec."
 
-    assert project.AddRenderJob(), "Cannot add render job..."
+    jobId = project.AddRenderJob()
+
+    assert jobId, "Cannot add render job..."
+
+    return jobId
 
 
-def _start_render(project):
-    assert project.StartRendering(1)
+def _start_render(project, jobId):
+    assert project.StartRendering(jobId)
     while project.IsRenderingInProgress():
-        print(project.GetRenderJobStatus(1))
+        print(project.GetRenderJobStatus(jobId))
         # sys.stdout.flush()
         time.sleep(1)
-    print(project.GetRenderJobStatus(1))
+    print(project.GetRenderJobStatus(jobId))
 
 
 if __name__ == '__main__':
