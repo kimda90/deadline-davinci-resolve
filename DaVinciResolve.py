@@ -104,7 +104,14 @@ class ResolveProcess(ManagedProcess):
         pass
 
     def RenderExecutable(self):
-        return self.deadline_plugin.GetConfigEntry("ResolveExecutable")
+        executables = self.deadline_plugin.GetConfigEntry("ResolveExecutable")
+        exe = FileUtils.SearchFileListFor32Bit( executables )
+
+
+        self.LogInfo( "Looking for DaVinci Resolve: '%s'" % exe )
+
+
+        return exe
 
     def RenderArgument(self):
         return "-nogui"
