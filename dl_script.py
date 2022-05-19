@@ -137,10 +137,19 @@ def _setup_render_job(project, formatted_output_path, format_="", codec="", rend
 def _start_render(project, jobId):
     assert project.StartRendering(jobId)
     while project.IsRenderingInProgress():
-        print(project.GetRenderJobStatus(jobId))
+        # print(project.GetRenderJobStatus(jobId))
+
+        status = project.GetRenderJobStatus(jobId)
+
+        if status.get("CompletionPercentage"):
+            print("Progress: {}%".format(status.get("CompletionPercentage")))
+
         # sys.stdout.flush()
         time.sleep(1)
     print(project.GetRenderJobStatus(jobId))
+
+    if status.get("CompletionPercentage"):
+        print("Progress: {}%".format(status.get("CompletionPercentage")))
 
 
 if __name__ == '__main__':
