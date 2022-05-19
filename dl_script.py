@@ -57,10 +57,17 @@ def main():
 def _load_database(resolve, database_type, database_name, database_ip="127.0.0.1"):
     print("Loading database:", database_name)
     project_manager = resolve.GetProjectManager()
-    assert project_manager.SetCurrentDatabase({
+    
+    target_database = {
         "DbType": database_type, 
         "DbName": database_name, 
-        "IpAddress": database_ip}), "Cannot load database."
+        "IpAddress": database_ip }
+
+    # check if current database is the same as the target database
+    current_database = project_manager.GetCurrentDatabase()
+    
+    if target_database != current_database:
+        assert project_manager.SetCurrentDatabase(target_database), "Cannot load database."
 
 def _connect_to_resolve():
     resolve = None
