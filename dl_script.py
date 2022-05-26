@@ -108,7 +108,7 @@ def _load_project(resolve, project_name, folders):
     return project
 
 
-def _load_project_by_path(resolve, project_path, folders):
+def _load_project_by_path(resolve, project_path):
     project_manager = resolve.GetProjectManager()
     assert project_manager.ImportProject(project_path), "Import Project Failed"
     assert project_manager.LoadProject(project_path), "Error opening archive project"
