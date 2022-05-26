@@ -104,8 +104,7 @@ class ResolveProcess(ManagedProcess):
         pass
 
     def RenderExecutable(self):
-        executables = self.deadline_plugin.GetConfigEntry("ResolveExecutable")
-        exe = FileUtils.SearchFileListFor32Bit( executables )
+        exe = self.deadline_plugin.GetRenderExecutable("ResolveExecutable")
         return exe
 
     def RenderArgument(self):
@@ -136,8 +135,8 @@ class FuScriptProcess(ManagedProcess):
 
     def RenderExecutable(self):
         # return "python.exe"
-        executables = self.deadline_plugin.GetConfigEntry("FuScriptExecutable")
-        exe = FileUtils.SearchFileListFor32Bit( executables )
+        # executables = self.deadline_plugin.GetConfigEntry("FuScriptExecutable")
+        exe = self.deadline_plugin.GetRenderExecutable( "FuScriptExecutable" )
         return exe
 
     def RenderArgument(self):
