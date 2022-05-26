@@ -142,6 +142,8 @@ class FuScriptProcess(ManagedProcess):
 
     def RenderArgument(self):
         project_name = self.deadline_plugin.GetPluginInfoEntry("ProjectName")
+        publish_path = self.deadline_plugin.GetPluginInfoEntry("PublishPath")
+        project_path = self.deadline_plugin.GetPluginInfoEntry("ProjectOutputPath")
         output_path = self.deadline_plugin.GetPluginInfoEntry("OutputPath")
         folders = self.deadline_plugin.GetPluginInfoEntryWithDefault("Folders", "")
         timeline = self.deadline_plugin.GetPluginInfoEntryWithDefault("Timeline", "")
@@ -155,7 +157,7 @@ class FuScriptProcess(ManagedProcess):
 
         dl_script = Path.Combine(self.deadline_plugin.GetPluginDirectory(), "dl_script.py")
 
-        args = ['"{}" "{}" "{}" "{}" "{}"'.format(dl_script, database_type, database_name, project_name, output_path)]
+        args = ['"{}" "{}" "{}" "{}" "{}" "{}" "{}"'.format(dl_script, database_type, database_name, project_name, publish_path, project_path, output_path)]
 
         if folders:
             args.append('--folders "{}"'.format(folders))

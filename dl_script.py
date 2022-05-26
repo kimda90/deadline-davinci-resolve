@@ -18,6 +18,8 @@ def main():
     parser.add_argument("database_type")
     parser.add_argument("database_name")
     parser.add_argument("project_name")
+    parser.add_argument("publish_path")
+    parser.add_argument("project_path")
     parser.add_argument("output_path")
     parser.add_argument("--folders", default="")
     parser.add_argument("--timeline", default="")
@@ -32,6 +34,8 @@ def main():
     database_ip = args.database_ip
 
     project_name = args.project_name
+    publish_path = args.publish_path
+    project_path = args.project_path
     output_path = args.output_path
     folders = args.folders
     timeline_name = args.timeline
@@ -43,10 +47,14 @@ def main():
 
     resolve = _connect_to_resolve()
 
-    if database_type and database_name:
-        _load_database(resolve, database_type, database_name, database_ip)
+    # If we want to open the database and render directly from that project
+    # if database_type and database_name:
+    #     _load_database(resolve, database_type, database_name, database_ip)
 
-    project = _load_project(resolve, project_name, folders)
+    # project = _load_project(resolve, project_name, folders)
+
+    # If we exported a drp and want to render that project.
+    project = _load_project_by_path(resolve, project_path)
 
     if timeline_name:
         _set_timeline(project, timeline_name)
@@ -98,6 +106,17 @@ def _load_project(resolve, project_name, folders):
     project = project_manager.GetCurrentProject()
     print(project)
     return project
+
+
+def _load_project_by_path(resolve, project_path, folders):
+    project_manager = resolve.GetProjectManager()
+    assert project_manager.ImportProject(project_path), "Import Project Failed"
+    assert project_manager.LoadProject(project_path), "Error opening archive project"
+
+    resolve_project = project_manager.GetCurrentProject()
+    assert resolve_project, "Failed to get Project"
+
+    return resolve_project
 
 
 def _set_timeline(project, timeline_name):

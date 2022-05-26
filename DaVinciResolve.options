@@ -31,6 +31,17 @@ Required=false
 DisableIfBlank=false
 DefaultValue=
 
+[PublishPath]
+Type=FilenameSave
+Label=Publish Path
+Category=Output
+CategoryOrder=1
+Description=Where to save the output
+Index=0
+Required=true
+DisableIfBlank=false
+DefaultValue=
+
 [OutputPath]
 Type=FilenameSave
 Label=Output Path
@@ -42,13 +53,24 @@ Required=true
 DisableIfBlank=false
 DefaultValue=
 
+[ProjectOutputPath]
+Type=FilenameSave
+Label=Project Output Path
+Category=Output
+CategoryOrder=1
+Description=Where to save the output
+Index=1
+Required=true
+DisableIfBlank=false
+DefaultValue=
+
 [Format]
 Type=string
 Label=Format
 Category=Output
 CategoryOrder=1
 Description=What format to use when exporing video
-Index=1
+Index=2
 Required=false
 DisableIfBlank=false
 DefaultValue=
@@ -59,7 +81,7 @@ Label=Codec
 Category=Output
 CategoryOrder=1
 Description=What codec to use when exporting video
-Index=2
+Index=3
 Required=false
 DisableIfBlank=false
 DefaultValue=
@@ -70,7 +92,7 @@ Label=Render Preset
 Category=Output
 CategoryOrder=1
 Description=What render preset to load before exporting
-Index=3
+Index=4
 Required=false
 DisableIfBlank=false
 DefaultValue=
