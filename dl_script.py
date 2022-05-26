@@ -110,10 +110,11 @@ def _load_project(resolve, project_name, folders):
 def _load_project_by_path(resolve, project_path, project_name):
     project_manager = resolve.GetProjectManager()
 
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    assert project_manager.CreateFolder(timestamp)
-    assert project_manager.OpenFolder(timestamp)
+    assert project_manager.GotoRootFolder(), "Cannot goto root folder."
+    assert project_manager.CreateFolder(timestamp), "Cannot create folder."
+    assert project_manager.OpenFolder(timestamp), "Cannot open folder."
     assert project_manager.ImportProject(project_path), "Import Project Failed"
     assert project_manager.LoadProject(project_name), "Error opening archive project"
 
