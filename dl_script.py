@@ -115,8 +115,9 @@ def _load_project_by_path(resolve, project_path, project_name):
     assert project_manager.GotoRootFolder(), "Cannot goto root folder."
     assert project_manager.CreateFolder(timestamp), "Cannot create folder."
     assert project_manager.OpenFolder(timestamp), "Cannot open folder."
-    assert project_manager.ImportProject(project_path), "Import Project Failed"
-    assert project_manager.LoadProject(project_name), "Error opening archive project"
+    
+    project_manager.ImportProject(project_path)
+    project_manager.LoadProject(project_name)
 
     resolve_project = project_manager.GetCurrentProject()
     assert resolve_project, "Failed to get Project"
@@ -136,8 +137,8 @@ def _set_timeline(project, timeline_name):
 def _setup_render_job(project, formatted_output_path, format_="", codec="", render_preset=""):
     assert project.DeleteAllRenderJobs(), "Cannot delete render jobs..."
 
-    print("Loading render preset [{}]".format(render_preset))
-    assert project.LoadRenderPreset(render_preset), "Cannot set render_preset [{}]".format(render_preset)
+    # print("Loading render preset [{}]".format(render_preset))
+    # assert project.LoadRenderPreset(render_preset), "Cannot set render_preset [{}]".format(render_preset)
 
     render_settings = {
         # "SelectAllFrames": ?,

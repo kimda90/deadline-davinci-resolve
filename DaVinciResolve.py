@@ -33,7 +33,7 @@ class DaVinciResolvePlugin(DeadlinePlugin):
 
     # noinspection PyAttributeOutsideInit
     def InitializeProcess(self):
-        self.SingleFramesOnly = True
+        self.SingleFramesOnly = False
         self.PluginType = PluginType.Advanced
 
     def StartJob(self):
