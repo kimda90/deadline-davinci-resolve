@@ -156,7 +156,7 @@ class FuScriptProcess(ManagedProcess):
 
         dl_script = Path.Combine(self.deadline_plugin.GetPluginDirectory(), "dl_script.py")
 
-        args = ['"{}" "{}" "{}" "{}" "{}" "{}" "{}"'.format(dl_script, database_type, database_name, project_name, output_path)]
+        args = ['"{}" "{}" "{}" "{}" "{}"'.format(dl_script, database_type, database_name, project_name, output_path)]
 
         if folders:
             args.append('--folders "{}"'.format(folders))
