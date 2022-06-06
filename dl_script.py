@@ -17,13 +17,13 @@ def main():
     parser.add_argument("database_type")
     parser.add_argument("database_name")
     parser.add_argument("project_name")
-    parser.add_argument("publish_path")
-    parser.add_argument("project_path")
+    # parser.add_argument("publish_path")
+    # parser.add_argument("project_path")
     parser.add_argument("output_path")
     parser.add_argument("--folders", default="")
     parser.add_argument("--timeline", default="")
-    parser.add_argument("--format", default="")
-    parser.add_argument("--codec", default="")
+    # parser.add_argument("--format", default="")
+    # parser.add_argument("--codec", default="")
     parser.add_argument("--render_preset", default="")
     parser.add_argument("--database_ip", default="")
     args = parser.parse_args()
@@ -33,13 +33,13 @@ def main():
     database_ip = args.database_ip
 
     project_name = args.project_name
-    publish_path = args.publish_path
-    project_path = args.project_path
+    # publish_path = args.publish_path
+    # project_path = args.project_path
     output_path = args.output_path
     folders = args.folders
     timeline_name = args.timeline
-    format_ = args.format
-    codec = args.codec
+    # format_ = args.format
+    # codec = args.codec
     render_preset = args.render_preset
 
     formatted_output_path = datetime.now().strftime(output_path)
@@ -47,18 +47,15 @@ def main():
     resolve = _connect_to_resolve()
 
     # If we want to open the database and render directly from that project
-    # if database_type and database_name:
-    #     _load_database(resolve, database_type, database_name, database_ip)
+    if database_type and database_name:
+        _load_database(resolve, database_type, database_name, database_ip)
 
-    # project = _load_project(resolve, project_name, folders)
-
-    # If we exported a drp and want to render that project.
-    project = _load_project_by_path(resolve, project_path, project_name)
+    project = _load_project(resolve, project_name, folders)
 
     if timeline_name:
         _set_timeline(project, timeline_name)
 
-    jobId = _setup_render_job(project, formatted_output_path, format_, codec, render_preset)
+    jobId = _setup_render_job(project, formatted_output_path, render_preset)
     _start_render(project, jobId)
 
 def _load_database(resolve, database_type, database_name, database_ip="127.0.0.1"):
@@ -134,11 +131,11 @@ def _set_timeline(project, timeline_name):
             assert project.SetCurrentTimeline(timeline), "Cannot set timeline."
 
 
-def _setup_render_job(project, formatted_output_path, format_="", codec="", render_preset=""):
+def _setup_render_job(project, formatted_output_path, render_preset=""):
     assert project.DeleteAllRenderJobs(), "Cannot delete render jobs..."
 
-    # print("Loading render preset [{}]".format(render_preset))
-    # assert project.LoadRenderPreset(render_preset), "Cannot set render_preset [{}]".format(render_preset)
+    print("Loading render preset [{}]".format(render_preset))
+    assert project.LoadRenderPreset(render_preset), "Cannot set render_preset [{}]".format(render_preset)
 
     render_settings = {
         # "SelectAllFrames": ?,
@@ -148,9 +145,6 @@ def _setup_render_job(project, formatted_output_path, format_="", codec="", rend
         "CustomName": os.path.basename(formatted_output_path)
     }
     assert project.SetRenderSettings(render_settings), "Cannot set render settings..."
-
-    if format_ and codec and not render_preset:
-        assert project.SetCurrentRenderFormatAndCodec(format_, codec), "Cannot set render format/codec."
 
     jobId = project.AddRenderJob()
 

@@ -53,39 +53,6 @@ Required=true
 DisableIfBlank=false
 DefaultValue=
 
-[ProjectOutputPath]
-Type=FilenameSave
-Label=Project Output Path
-Category=Output
-CategoryOrder=1
-Description=Where to save the output
-Index=1
-Required=true
-DisableIfBlank=false
-DefaultValue=
-
-[Format]
-Type=string
-Label=Format
-Category=Output
-CategoryOrder=1
-Description=What format to use when exporing video
-Index=2
-Required=false
-DisableIfBlank=false
-DefaultValue=
-
-[Codec]
-Type=string
-Label=Codec
-Category=Output
-CategoryOrder=1
-Description=What codec to use when exporting video
-Index=3
-Required=false
-DisableIfBlank=false
-DefaultValue=
-
 [RenderPreset]
 Type=string
 Label=Render Preset

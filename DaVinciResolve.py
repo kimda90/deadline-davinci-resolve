@@ -141,13 +141,13 @@ class FuScriptProcess(ManagedProcess):
 
     def RenderArgument(self):
         project_name = self.deadline_plugin.GetPluginInfoEntry("ProjectName")
-        publish_path = self.deadline_plugin.GetPluginInfoEntry("PublishPath")
-        project_path = self.deadline_plugin.GetPluginInfoEntry("ProjectOutputPath")
+        # publish_path = self.deadline_plugin.GetPluginInfoEntry("PublishPath")
+        # project_path = self.deadline_plugin.GetPluginInfoEntry("ProjectOutputPath")
         output_path = self.deadline_plugin.GetPluginInfoEntry("OutputPath")
         folders = self.deadline_plugin.GetPluginInfoEntryWithDefault("Folders", "")
         timeline = self.deadline_plugin.GetPluginInfoEntryWithDefault("Timeline", "")
-        format_ = self.deadline_plugin.GetPluginInfoEntryWithDefault("Format", "")
-        codec = self.deadline_plugin.GetPluginInfoEntryWithDefault("Codec", "")
+        # format_ = self.deadline_plugin.GetPluginInfoEntryWithDefault("Format", "")
+        # codec = self.deadline_plugin.GetPluginInfoEntryWithDefault("Codec", "")
         render_preset = self.deadline_plugin.GetPluginInfoEntryWithDefault("RenderPreset", "")
 
         database_type = self.deadline_plugin.GetPluginInfoEntryWithDefault("DatabaseType", "")
@@ -156,7 +156,7 @@ class FuScriptProcess(ManagedProcess):
 
         dl_script = Path.Combine(self.deadline_plugin.GetPluginDirectory(), "dl_script.py")
 
-        args = ['"{}" "{}" "{}" "{}" "{}" "{}" "{}"'.format(dl_script, database_type, database_name, project_name, publish_path, project_path, output_path)]
+        args = ['"{}" "{}" "{}" "{}" "{}" "{}" "{}"'.format(dl_script, database_type, database_name, project_name, output_path)]
 
         if folders:
             args.append('--folders "{}"'.format(folders))
@@ -164,11 +164,11 @@ class FuScriptProcess(ManagedProcess):
         if timeline:
             args.append('--timeline "{}"'.format(timeline))
 
-        if format_:
-            args.append('--format "{}"'.format(format_))
+        # if format_:
+        #     args.append('--format "{}"'.format(format_))
 
-        if codec:
-            args.append('--codec "{}"'.format(codec))
+        # if codec:
+        #     args.append('--codec "{}"'.format(codec))
 
         if render_preset:
             args.append('--render_preset "{}"'.format(render_preset))
