@@ -89,20 +89,25 @@ def _connect_to_resolve():
     time.sleep(5)
     return resolve
 
-
 def _load_project(resolve, project_name, folders):
     project_manager = resolve.GetProjectManager()
+    time.sleep(1)
+
     if folders:
         folders = folders.replace("\\", "/")
         for folder in folders.split("/"):
             print("Opening folder:", folder)
             assert project_manager.OpenFolder(folder), "Cannot open folder."
-    print("Loading project:", project_name)
-    assert project_manager.LoadProject(project_name), "Cannot load project."
-    project = project_manager.GetCurrentProject()
-    print(project)
-    return project
 
+    assert project_manager.LoadProject(project_name), "Cannot load project. Loading Failed."
+    time.sleep(1)
+
+    project = project_manager.GetCurrentProject()
+    time.sleep(1)
+    
+    assert project.GetName() == project_name, "Cannot load project. Name Mismatch"
+    
+    return project
 
 def _load_project_by_path(resolve, project_path, project_name):
     project_manager = resolve.GetProjectManager()
